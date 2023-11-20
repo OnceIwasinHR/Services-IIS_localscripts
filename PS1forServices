@@ -1,0 +1,18 @@
+# Define the service name
+$serviceName = 'Test'
+
+# Check if the service is running
+$service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
+
+if ($service -eq $null) {
+    Write-Host "The service '$serviceName' is not installed on this computer."
+} elseif ($service.Status -ne 'Running') {
+    # If the service is not running, start it
+    Start-Service -Name $serviceName
+    Write-Host "Starting the '$serviceName' service..."
+} else {
+    Write-Host "The '$serviceName' service is already running."
+}
+
+
+# Same Script with modification can be used for both services or IIS appool restart purposes using same Schaduled task.
